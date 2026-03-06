@@ -83,12 +83,43 @@ body {
   font-family: var(--font-sans);
 }
 
-/* Smooth theme transitions */
+/* Smooth scrolling */
 html {
   color-scheme: light;
+  scroll-behavior: smooth;
 }
 
 .dark html,
 html.dark {
   color-scheme: dark;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+}
+
+/* Selection color */
+::selection {
+  background: hsl(220 70% 50% / 0.2);
+}
+
+/* Focus visible outlines */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
 }

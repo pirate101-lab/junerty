@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { AppSidebarWrapper } from "@/components/app-sidebar-wrapper";
+import { SidebarServerWrapper } from "@/components/sidebar-server-wrapper";
 import { AppHeader } from "@/components/app-header";
 
 export default async function DashboardLayout({
@@ -13,10 +13,10 @@ export default async function DashboardLayout({
 
   return (
     <div className="flex h-screen overflow-hidden">
-      <AppSidebarWrapper />
+      <SidebarServerWrapper />
       <div className="flex flex-1 flex-col overflow-hidden">
         <AppHeader />
-        <main className="flex-1 overflow-y-auto p-6">{children}</main>
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6">{children}</main>
       </div>
     </div>
   );
