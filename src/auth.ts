@@ -1,7 +1,8 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { prisma } from "@/lib/prisma";
-import bcrypt from "bcryptjs";
+
+// NOTE: prisma and bcryptjs are dynamically imported inside callbacks
+// to avoid loading Node.js-only modules in the Edge runtime (middleware).
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
@@ -20,6 +21,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
+
+        const { prisma } = await import("@/lib/prisma");
+        const bcrypt = await import("bcryptjs");
 
         const user = await prisma.user.findUnique({
           where: { email: credentials.email as string },
@@ -49,6 +53,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.email = user.email;
       }
       if (token.id) {
+        const { prisma } = await import("@/lib/prisma");
         const dbUser = await prisma.user.findUnique({
           where: { id: token.id as string },
           select: { role: true, isActive: true, walletBalance: true },
