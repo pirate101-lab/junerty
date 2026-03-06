@@ -28,6 +28,8 @@ const slides: Slide[] = [
   },
 ];
 
+const AUTOPLAY_INTERVAL_MS = 5000;
+
 export function HeroSlider() {
   const [current, setCurrent] = useState(0);
 
@@ -40,7 +42,7 @@ export function HeroSlider() {
   }, []);
 
   useEffect(() => {
-    const timer = setInterval(next, 5000);
+    const timer = setInterval(next, AUTOPLAY_INTERVAL_MS);
     return () => clearInterval(timer);
   }, [next]);
 

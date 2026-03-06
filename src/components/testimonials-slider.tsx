@@ -49,6 +49,8 @@ const testimonials: Testimonial[] = [
   },
 ];
 
+const AUTOPLAY_INTERVAL_MS = 6000;
+
 export function TestimonialsSlider() {
   const [current, setCurrent] = useState(0);
 
@@ -61,7 +63,7 @@ export function TestimonialsSlider() {
   }, []);
 
   useEffect(() => {
-    const timer = setInterval(next, 6000);
+    const timer = setInterval(next, AUTOPLAY_INTERVAL_MS);
     return () => clearInterval(timer);
   }, [next]);
 
