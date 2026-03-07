@@ -7,82 +7,128 @@ import {
   CheckSquare,
   User,
   Settings,
-  LogOut,
   Wallet,
   Users,
   ShieldCheck,
+  Zap,
 } from "lucide-react";
-import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { Button } from "@/components/ui/button";
 
-const baseNavItems = [
+const mainNavItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/tasks", label: "Tasks", icon: CheckSquare },
   { href: "/wallet", label: "Wallet", icon: Wallet },
   { href: "/referrals", label: "Referrals", icon: Users },
-  { href: "/tasks", label: "Tasks", icon: CheckSquare },
+];
+
+const accountNavItems = [
   { href: "/profile", label: "Profile", icon: User },
   { href: "/settings", label: "Settings", icon: Settings },
 ];
 
-const adminNavItem = { href: "/admin", label: "Admin", icon: ShieldCheck };
+const adminNavItem = { href: "/admin", label: "Admin Panel", icon: ShieldCheck };
 
 interface AppSidebarProps {
   isAdmin?: boolean;
   onClose?: () => void;
 }
 
+function NavGroup({
+  label,
+  items,
+  pathname,
+  onClose,
+}: {
+  label: string;
+  items: typeof mainNavItems;
+  pathname: string;
+  onClose?: () => void;
+}) {
+  return (
+    <div className="mb-4">
+      <p className="mb-1.5 px-3 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/60">
+        {label}
+      </p>
+      {items.map((item) => {
+        const isActive =
+          pathname === item.href || pathname.startsWith(item.href + "/");
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            onClick={onClose}
+            className={cn(
+              "relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 my-0.5",
+              isActive
+                ? "bg-primary/15 text-primary nav-active-glow"
+                : "text-muted-foreground hover:bg-accent/60 hover:text-foreground"
+            )}
+          >
+            {isActive && (
+              <span className="absolute left-0 top-1/2 h-6 w-0.5 -translate-y-1/2 rounded-r bg-primary" />
+            )}
+            <item.icon
+              className={cn(
+                "h-4 w-4 shrink-0",
+                isActive ? "text-primary" : "text-muted-foreground"
+              )}
+            />
+            <span>{item.label}</span>
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
+
 export function AppSidebar({ isAdmin = false, onClose }: AppSidebarProps) {
   const pathname = usePathname();
-  const navItems = isAdmin ? [...baseNavItems, adminNavItem] : baseNavItems;
 
   return (
-    <aside className="flex h-screen w-64 flex-col border-r border-border bg-card">
-      <div className="flex h-16 items-center gap-2 border-b border-border px-6">
+    <aside className="flex h-screen w-64 flex-col border-r border-sidebar-border bg-sidebar">
+      {/* Logo */}
+      <div className="flex h-16 items-center gap-2.5 border-b border-sidebar-border px-5">
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 shadow-lg shadow-violet-500/25">
+          <Zap className="h-4 w-4 text-white" />
+        </div>
         <Link
           href="/dashboard"
-          className="bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-lg font-bold tracking-wide text-transparent"
           onClick={onClose}
+          className="brand-gradient text-lg font-extrabold tracking-wide"
         >
           SYNTHGRAPHIX
         </Link>
       </div>
 
-      <nav className="flex-1 space-y-1 p-4">
-        {navItems.map((item) => {
-          const isActive =
-            pathname === item.href ||
-            pathname.startsWith(item.href + "/");
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={onClose}
-              className={cn(
-                "relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
-                isActive
-                  ? "border-l-[3px] border-primary bg-accent/60 text-foreground"
-                  : "border-l-[3px] border-transparent text-muted-foreground hover:bg-accent/80 hover:text-accent-foreground"
-              )}
-            >
-              <item.icon className="h-5 w-5 shrink-0" />
-              <span>{item.label}</span>
-            </Link>
-          );
-        })}
+      {/* Navigation */}
+      <nav className="flex-1 overflow-y-auto p-3 pt-4">
+        <NavGroup
+          label="Main"
+          items={mainNavItems}
+          pathname={pathname}
+          onClose={onClose}
+        />
+        <NavGroup
+          label="Account"
+          items={accountNavItems}
+          pathname={pathname}
+          onClose={onClose}
+        />
+        {isAdmin && (
+          <NavGroup
+            label="Admin"
+            items={[adminNavItem]}
+            pathname={pathname}
+            onClose={onClose}
+          />
+        )}
       </nav>
 
-      <div className="border-t border-border p-4 space-y-2">
-        <ThemeToggle />
-        <Button
-          variant="ghost"
-          className="w-full justify-start gap-2 rounded-xl text-muted-foreground transition-all duration-200 hover:bg-accent/80 hover:text-accent-foreground"
-          onClick={() => signOut({ callbackUrl: "/" })}
-        >
-          <LogOut className="h-4 w-4" />
-          Sign out
-        </Button>
+      {/* Footer brand */}
+      <div className="border-t border-sidebar-border px-5 py-3">
+        <p className="text-[11px] text-muted-foreground/50">
+          © 2025 SYNTHGRAPHIX
+        </p>
       </div>
     </aside>
   );

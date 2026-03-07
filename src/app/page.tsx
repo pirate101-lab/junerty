@@ -22,19 +22,27 @@ export default async function LandingPage() {
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/40 bg-background/80 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-lg font-extrabold tracking-wider text-transparent sm:text-xl">
+          <Link href="/" className="flex items-center gap-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 shadow-lg shadow-violet-500/30">
+              <Zap className="h-4 w-4 text-white" />
+            </div>
+            <span className="brand-gradient text-lg font-extrabold tracking-wide">
               SYNTHGRAPHIX
             </span>
           </Link>
-          <div className="flex items-center gap-2 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-3">
             <Link href="/auth/login">
-              <Button variant="ghost" className="text-sm">
+              <Button variant="ghost" size="sm" className="text-sm">
                 Sign in
               </Button>
             </Link>
             <Link href="/auth/register">
-              <Button className="text-sm">Get Started</Button>
+              <Button
+                size="sm"
+                className="bg-gradient-to-r from-violet-600 to-indigo-600 text-sm text-white shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40"
+              >
+                Get Started
+              </Button>
             </Link>
           </div>
         </div>
@@ -43,41 +51,41 @@ export default async function LandingPage() {
       {/* Hero */}
       <section className="relative overflow-hidden pt-28 pb-20 sm:pt-36 sm:pb-28">
         {/* Decorative gradient blobs */}
-        <div className="pointer-events-none absolute -top-32 -left-32 h-[28rem] w-[28rem] rounded-full bg-cyan-500/20 blur-[120px]" />
-        <div className="pointer-events-none absolute -right-32 top-10 h-[24rem] w-[24rem] rounded-full bg-blue-600/20 blur-[120px]" />
-        <div className="pointer-events-none absolute bottom-0 left-1/2 h-[20rem] w-[20rem] -translate-x-1/2 rounded-full bg-indigo-500/10 blur-[100px]" />
+        <div className="pointer-events-none absolute -top-40 -left-40 h-[36rem] w-[36rem] rounded-full bg-violet-600/15 blur-[130px]" />
+        <div className="pointer-events-none absolute -right-40 top-0 h-[30rem] w-[30rem] rounded-full bg-indigo-600/15 blur-[130px]" />
+        <div className="pointer-events-none absolute bottom-0 left-1/2 h-[22rem] w-[22rem] -translate-x-1/2 rounded-full bg-purple-500/10 blur-[100px]" />
 
         <div className="relative mx-auto max-w-6xl px-4 text-center sm:px-6">
-          <p className="mb-4 inline-block rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-medium tracking-wide text-cyan-400 sm:text-sm">
-            Next-Generation Business Platform
+          <p className="mb-4 inline-block rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-1.5 text-xs font-semibold tracking-wide text-violet-400 sm:text-sm">
+            ⚡ Next-Generation Earning Platform
           </p>
           <h1 className="text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-            The Future of
+            Earn Real Money
             <br />
-            <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 bg-clip-text text-transparent">
-              Digital Business
+            <span className="brand-gradient">
+              Complete Tasks &amp; Grow
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-            SYNTHGRAPHIX is the all-in-one digital platform engineered for
-            business growth. Manage your wallet, track analytics, build referral
-            networks, and scale — all from a single dashboard.
+            SYNTHGRAPHIX is the all-in-one digital earning platform. Complete
+            tasks, refer friends, manage your wallet, and withdraw your earnings
+            — all from one powerful dashboard.
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link href="/auth/register">
               <Button
                 size="lg"
-                className="gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-base font-semibold text-white shadow-lg shadow-cyan-500/25 transition-all hover:shadow-xl hover:shadow-cyan-500/30"
+                className="gap-2 bg-gradient-to-r from-violet-600 to-indigo-600 px-8 text-base font-semibold text-white shadow-xl shadow-violet-500/30 transition-all hover:shadow-violet-500/50"
               >
-                Get Started Free
-                <ArrowRight className="h-4 w-4" />
+                Start Earning Free
+                <ArrowRight className="h-5 w-5" />
               </Button>
             </Link>
             <Link href="/auth/login">
               <Button
                 size="lg"
                 variant="outline"
-                className="border-border/60 text-base"
+                className="border-border/60 px-8 text-base"
               >
                 Sign In
               </Button>
@@ -87,21 +95,19 @@ export default async function LandingPage() {
       </section>
 
       {/* Stats Bar */}
-      <section className="border-y border-border/40 bg-muted/30 backdrop-blur-sm">
+      <section className="border-y border-border/40 bg-muted/20">
         <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 py-8 sm:px-6 md:grid-cols-4 md:gap-8 md:py-10">
           {[
-            { value: "Growing", label: "Community" },
-            { value: "Secure", label: "Payments" },
-            { value: "Always", label: "Available" },
+            { value: "10K+", label: "Active Members" },
+            { value: "KES 5M+", label: "Total Earned" },
+            { value: "500+", label: "Daily Tasks" },
             { value: "24/7", label: "Support" },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
-              <p className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-2xl font-extrabold text-transparent sm:text-3xl">
+              <p className="brand-gradient text-2xl font-extrabold sm:text-3xl">
                 {stat.value}
               </p>
-              <p className="mt-1 text-sm text-muted-foreground">
-                {stat.label}
-              </p>
+              <p className="mt-1 text-sm text-muted-foreground">{stat.label}</p>
             </div>
           ))}
         </div>
@@ -113,12 +119,10 @@ export default async function LandingPage() {
           <div className="text-center">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
               Everything You Need to{" "}
-              <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                Succeed
-              </span>
+              <span className="brand-gradient">Earn &amp; Grow</span>
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-              Powerful tools designed to help you grow your business on the
+              Powerful tools designed to maximize your earnings on the
               SYNTHGRAPHIX platform.
             </p>
           </div>
@@ -126,48 +130,62 @@ export default async function LandingPage() {
           <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
               {
+                icon: CheckSquare,
+                title: "Task Management",
+                description:
+                  "Complete daily tasks to earn real money. Track progress and unlock new earning opportunities every day.",
+                color: "from-violet-500/20 to-violet-600/20",
+                iconColor: "text-violet-400",
+              },
+              {
                 icon: Wallet,
                 title: "Wallet & Payments",
                 description:
-                  "Deposit, withdraw, and transfer funds seamlessly. Real-time balance tracking with full transaction history.",
+                  "Manage your earnings in real-time. Instant deposits and fast withdrawals to your M-Pesa wallet.",
+                color: "from-teal-500/20 to-teal-600/20",
+                iconColor: "text-teal-400",
               },
               {
                 icon: Users,
                 title: "Referral System",
                 description:
-                  "Grow your network and earn rewards. Multi-tier referral tracking with automated commission payouts.",
+                  "Earn bonus commissions by referring friends. Multi-tier referral tracking with automated payouts.",
+                color: "from-orange-500/20 to-orange-600/20",
+                iconColor: "text-orange-400",
               },
               {
                 icon: BarChart3,
                 title: "Analytics Dashboard",
                 description:
-                  "Visualize earnings, referrals, and growth with interactive charts. Make data-driven decisions.",
-              },
-              {
-                icon: CheckSquare,
-                title: "Task Management",
-                description:
-                  "Complete daily tasks to earn rewards. Track progress and unlock new earning opportunities.",
+                  "Visualize your earnings, referrals, and growth with interactive charts and real-time data.",
+                color: "from-blue-500/20 to-blue-600/20",
+                iconColor: "text-blue-400",
               },
               {
                 icon: Shield,
                 title: "Secure Platform",
                 description:
-                  "Bank-grade encryption, two-factor authentication, and secure sessions protect your account and funds.",
+                  "Bank-grade encryption and secure sessions protect your account and your hard-earned money.",
+                color: "from-green-500/20 to-green-600/20",
+                iconColor: "text-green-400",
               },
               {
                 icon: Headphones,
                 title: "24/7 Support",
                 description:
-                  "Round-the-clock customer support via chat, email, and phone. We are always here to help you.",
+                  "Round-the-clock customer support via WhatsApp, email, and live chat. We're always here.",
+                color: "from-pink-500/20 to-pink-600/20",
+                iconColor: "text-pink-400",
               },
             ].map((feature) => (
               <div
                 key={feature.title}
-                className="group rounded-2xl border border-border/50 bg-card/50 p-6 backdrop-blur-sm transition-all hover:border-cyan-500/30 hover:bg-card/80 hover:shadow-lg hover:shadow-cyan-500/5"
+                className="group rounded-2xl border border-border/50 bg-card/50 p-6 backdrop-blur-sm transition-all duration-200 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20">
-                  <feature.icon className="h-6 w-6 text-cyan-400" />
+                <div
+                  className={`flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${feature.color}`}
+                >
+                  <feature.icon className={`h-6 w-6 ${feature.iconColor}`} />
                 </div>
                 <h3 className="mt-4 text-lg font-semibold">{feature.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
@@ -180,43 +198,41 @@ export default async function LandingPage() {
       </section>
 
       {/* How It Works */}
-      <section className="border-y border-border/40 bg-muted/20 py-20 sm:py-28">
+      <section className="border-y border-border/40 bg-muted/10 py-20 sm:py-28">
         <div className="mx-auto max-w-4xl px-4 sm:px-6">
           <div className="text-center">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-              Get Started in{" "}
-              <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                3 Simple Steps
-              </span>
+              Start Earning in{" "}
+              <span className="brand-gradient">3 Simple Steps</span>
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-              Join SYNTHGRAPHIX and start growing your digital business today.
+              Join SYNTHGRAPHIX and start earning real money today.
             </p>
           </div>
 
           <div className="relative mt-16">
             {/* Connecting line */}
-            <div className="absolute left-6 top-6 hidden h-[calc(100%-3rem)] w-px bg-gradient-to-b from-cyan-500 via-blue-500 to-indigo-500 md:left-1/2 md:block md:-translate-x-px" />
+            <div className="absolute left-6 top-6 hidden h-[calc(100%-3rem)] w-px bg-gradient-to-b from-violet-500 via-indigo-500 to-purple-500 md:left-1/2 md:block md:-translate-x-px" />
 
             <div className="space-y-12 md:space-y-16">
               {[
                 {
                   step: "01",
-                  title: "Sign Up",
+                  title: "Create Your Account",
                   description:
-                    "Create your free SYNTHGRAPHIX account in under a minute. Just your name, email, and a password.",
+                    "Sign up for free in under a minute. Just your name, email, and a password to get started.",
                 },
                 {
                   step: "02",
-                  title: "Activate Your Account",
+                  title: "Activate Your Wallet",
                   description:
-                    "Make your first deposit to activate your wallet and unlock all platform features and earning tools.",
+                    "Make your first deposit to activate your wallet and unlock all platform earning features.",
                 },
                 {
                   step: "03",
-                  title: "Earn & Grow",
+                  title: "Earn & Withdraw",
                   description:
-                    "Complete tasks, refer friends, and watch your earnings grow. Withdraw anytime to your mobile wallet.",
+                    "Complete tasks, refer friends, and watch your earnings grow. Withdraw anytime to your M-Pesa.",
                 },
               ].map((item, index) => (
                 <div
@@ -225,12 +241,9 @@ export default async function LandingPage() {
                     index % 2 === 1 ? "md:flex-row-reverse md:text-right" : ""
                   }`}
                 >
-                  {/* Step number */}
-                  <div className="z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 text-sm font-bold text-white shadow-lg shadow-cyan-500/25 md:mx-auto">
+                  <div className="z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 text-sm font-bold text-white shadow-xl shadow-violet-500/30 md:mx-auto">
                     {item.step}
                   </div>
-
-                  {/* Content */}
                   <div className="flex-1 rounded-xl border border-border/50 bg-card/50 p-5 backdrop-blur-sm md:max-w-[calc(50%-3rem)]">
                     <h3 className="text-lg font-semibold">{item.title}</h3>
                     <p className="mt-2 text-sm text-muted-foreground">
@@ -246,56 +259,59 @@ export default async function LandingPage() {
 
       {/* CTA Section */}
       <section className="relative overflow-hidden py-20 sm:py-28">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-blue-600/10 to-indigo-600/10" />
-        <div className="pointer-events-none absolute -bottom-20 -right-20 h-[20rem] w-[20rem] rounded-full bg-cyan-500/15 blur-[100px]" />
-        <div className="pointer-events-none absolute -top-20 -left-20 h-[20rem] w-[20rem] rounded-full bg-blue-600/15 blur-[100px]" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-violet-500/10 via-indigo-600/10 to-purple-600/10" />
+        <div className="pointer-events-none absolute -bottom-20 -right-20 h-[24rem] w-[24rem] rounded-full bg-violet-500/15 blur-[120px]" />
+        <div className="pointer-events-none absolute -top-20 -left-20 h-[24rem] w-[24rem] rounded-full bg-indigo-600/15 blur-[120px]" />
 
         <div className="relative mx-auto max-w-3xl px-4 text-center sm:px-6">
-          <Zap className="mx-auto mb-4 h-10 w-10 text-cyan-400" />
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500 to-indigo-600 shadow-2xl shadow-violet-500/30">
+            <Zap className="h-8 w-8 text-white" />
+          </div>
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
-            Ready to Grow Your
+            Ready to Start
             <br />
-            <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-              Digital Business?
-            </span>
+            <span className="brand-gradient">Earning Today?</span>
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-            Join thousands of entrepreneurs already building and earning on
-            SYNTHGRAPHIX. Your journey starts with a single click.
+            Join thousands of members already earning on SYNTHGRAPHIX. Your
+            journey to financial growth starts with a single click.
           </p>
           <Link href="/auth/register" className="mt-8 inline-block">
             <Button
               size="lg"
-              className="gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-base font-semibold text-white shadow-lg shadow-cyan-500/25 transition-all hover:shadow-xl hover:shadow-cyan-500/30"
+              className="gap-2 bg-gradient-to-r from-violet-600 to-indigo-600 px-10 text-base font-semibold text-white shadow-2xl shadow-violet-500/30 transition-all hover:shadow-violet-500/50"
             >
               Create Free Account
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-5 w-5" />
             </Button>
           </Link>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border/40 bg-background/80 py-10 backdrop-blur-sm">
+      <footer className="border-t border-border/40 py-10">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="flex flex-col items-center gap-6 sm:flex-row sm:justify-between">
             <div className="flex flex-col items-center gap-2 sm:items-start">
-              <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-lg font-extrabold tracking-wider text-transparent">
-                SYNTHGRAPHIX
-              </span>
+              <div className="flex items-center gap-2">
+                <div className="flex h-6 w-6 items-center justify-center rounded-md bg-gradient-to-br from-violet-500 to-indigo-600">
+                  <Zap className="h-3.5 w-3.5 text-white" />
+                </div>
+                <span className="brand-gradient text-base font-extrabold tracking-wide">
+                  SYNTHGRAPHIX
+                </span>
+              </div>
               <p className="text-xs text-muted-foreground">
                 © 2025 SYNTHGRAPHIX. All rights reserved.
               </p>
             </div>
-
-            {/* Social links placeholders */}
-            <div className="flex items-center gap-4">
-              {["Twitter", "Discord", "GitHub"].map((social) => (
+            <div className="flex items-center gap-5">
+              {["Terms", "Privacy", "Support"].map((link) => (
                 <span
-                  key={social}
+                  key={link}
                   className="cursor-pointer text-sm text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  {social}
+                  {link}
                 </span>
               ))}
             </div>

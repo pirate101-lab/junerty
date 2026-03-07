@@ -15,6 +15,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Zap } from "lucide-react";
 
 function LoginForm() {
   const router = useRouter();
@@ -49,33 +50,32 @@ function LoginForm() {
   }
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-muted p-4">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background p-4">
       {/* Decorative gradient blobs */}
-      <div className="pointer-events-none absolute -left-32 -top-32 h-[420px] w-[420px] rounded-full bg-purple-500/20 blur-[120px]" />
-      <div className="pointer-events-none absolute -bottom-32 -right-32 h-[380px] w-[380px] rounded-full bg-blue-500/20 blur-[120px]" />
-      <div className="pointer-events-none absolute left-1/2 top-1/3 h-[260px] w-[260px] -translate-x-1/2 rounded-full bg-pink-500/10 blur-[100px]" />
+      <div className="pointer-events-none absolute -left-40 -top-40 h-[420px] w-[420px] rounded-full bg-violet-600/15 blur-[130px]" />
+      <div className="pointer-events-none absolute -bottom-40 -right-40 h-[380px] w-[380px] rounded-full bg-indigo-600/15 blur-[130px]" />
+      <div className="pointer-events-none absolute left-1/2 top-1/3 h-[260px] w-[260px] -translate-x-1/2 rounded-full bg-purple-500/10 blur-[100px]" />
 
       <div className="relative z-10 w-full max-w-md">
         {/* SYNTHGRAPHIX branding */}
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
-            <span className="bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 bg-clip-text text-transparent">
-              SYNTHGRAPHIX
-            </span>
+        <div className="mb-8 flex flex-col items-center gap-3">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500 to-indigo-600 shadow-2xl shadow-violet-500/30">
+            <Zap className="h-7 w-7 text-white" />
+          </div>
+          <h1 className="text-3xl font-extrabold tracking-tight">
+            <span className="brand-gradient">SYNTHGRAPHIX</span>
           </h1>
         </div>
 
-        <Card className="border border-border/50 bg-card/80 shadow-2xl backdrop-blur-xl">
+        <Card className="border border-border/50 shadow-2xl shadow-violet-500/5">
           <CardHeader className="space-y-1 text-center">
-            <CardTitle className="text-2xl font-bold">Welcome back to SYNTHGRAPHIX</CardTitle>
-            <CardDescription>
-              Sign in to your account to continue
-            </CardDescription>
+            <CardTitle className="text-xl font-bold">Welcome Back</CardTitle>
+            <CardDescription>Sign in to your account to continue</CardDescription>
           </CardHeader>
           <form onSubmit={onSubmit}>
             <CardContent className="space-y-4">
               {error && (
-                <div className="rounded-lg bg-destructive/10 p-3 text-sm text-destructive">
+                <div className="rounded-lg bg-destructive/10 px-3 py-2.5 text-sm text-destructive">
                   {error}
                 </div>
               )}
@@ -95,7 +95,7 @@ function LoginForm() {
                   <Label htmlFor="password">Password</Label>
                   <Link
                     href="/auth/forgot-password"
-                    className="text-sm text-muted-foreground hover:text-primary"
+                    className="text-xs text-muted-foreground hover:text-primary"
                   >
                     Forgot password?
                   </Link>
@@ -110,7 +110,11 @@ function LoginForm() {
               </div>
             </CardContent>
             <CardFooter className="flex flex-col gap-4">
-              <Button type="submit" className="w-full" disabled={loading}>
+              <Button
+                type="submit"
+                className="w-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-lg shadow-violet-500/20 hover:shadow-violet-500/40"
+                disabled={loading}
+              >
                 {loading ? "Signing in..." : "Sign in"}
               </Button>
               <p className="text-center text-sm text-muted-foreground">
@@ -133,7 +137,7 @@ function LoginForm() {
 export default function LoginPage() {
   return (
     <Suspense fallback={
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background via-background to-muted">
+      <div className="flex min-h-screen items-center justify-center bg-background">
         <div className="animate-pulse text-muted-foreground">Loading...</div>
       </div>
     }>
