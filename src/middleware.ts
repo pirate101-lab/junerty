@@ -1,33 +1,7 @@
-import { auth } from "@/auth";
+import NextAuth from "next-auth";
+import { authConfig } from "@/auth.config";
 
-export default auth((req) => {
-  const { nextUrl } = req;
-  const isLoggedIn = !!req.auth;
-
-  const isAuthRoute = nextUrl.pathname.startsWith("/auth");
-  const isDashboardRoute =
-    nextUrl.pathname.startsWith("/dashboard") ||
-    nextUrl.pathname.startsWith("/tasks") ||
-    nextUrl.pathname.startsWith("/profile") ||
-    nextUrl.pathname.startsWith("/settings") ||
-    nextUrl.pathname.startsWith("/wallet") ||
-    nextUrl.pathname.startsWith("/referrals") ||
-    nextUrl.pathname.startsWith("/activate") ||
-    nextUrl.pathname.startsWith("/withdraw") ||
-    nextUrl.pathname.startsWith("/admin");
-
-  if (isAuthRoute && isLoggedIn) {
-    return Response.redirect(new URL("/dashboard", nextUrl));
-  }
-
-  if (isDashboardRoute && !isLoggedIn) {
-    const loginUrl = new URL("/auth/login", nextUrl);
-    loginUrl.searchParams.set("callbackUrl", nextUrl.pathname);
-    return Response.redirect(loginUrl);
-  }
-
-  return undefined;
-});
+export default NextAuth(authConfig).auth;
 
 export const config = {
   matcher: [

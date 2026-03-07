@@ -11,11 +11,13 @@ interface AdminSettingsFormProps {
     activationFeeAmount: number;
     referralBonusAmount: number;
     minWithdrawalAmount: number;
+    whatsappNumber: string;
   };
 }
 
 export function AdminSettingsForm({ initialValues }: AdminSettingsFormProps) {
   const [values, setValues] = useState(initialValues);
+  const [whatsappNumber, setWhatsappNumber] = useState(initialValues.whatsappNumber);
   const [lipana, setLipana] = useState({ apiKey: "", secretKey: "", merchantId: "" });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
@@ -30,6 +32,7 @@ export function AdminSettingsForm({ initialValues }: AdminSettingsFormProps) {
         activationFeeAmount: values.activationFeeAmount,
         referralBonusAmount: values.referralBonusAmount,
         minWithdrawalAmount: values.minWithdrawalAmount,
+        whatsappNumber,
         ...(lipana.apiKey && lipana.secretKey && lipana.merchantId ? {
           lipanaApiKey: lipana.apiKey,
           lipanaSecretKey: lipana.secretKey,
@@ -128,6 +131,24 @@ export function AdminSettingsForm({ initialValues }: AdminSettingsFormProps) {
               disabled={loading}
             />
           </div>
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Support Settings</h3>
+        <div className="space-y-2">
+          <Label htmlFor="whatsappNumber">WhatsApp Number</Label>
+          <Input
+            id="whatsappNumber"
+            type="text"
+            placeholder="e.g. 254712345678"
+            value={whatsappNumber}
+            onChange={(e) => setWhatsappNumber(e.target.value)}
+            disabled={loading}
+          />
+          <p className="text-xs text-muted-foreground">
+            International format without + sign. Leave empty to hide the WhatsApp button.
+          </p>
         </div>
       </div>
 

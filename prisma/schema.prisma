@@ -123,6 +123,7 @@ model GlobalSettings {
   referralBonusAmount  Decimal  @default(100) @db.Decimal(10, 2)
   minWithdrawalAmount  Decimal  @default(500) @db.Decimal(10, 2)
   lipanaCredentials    String?
+  whatsappNumber       String?
   updatedAt            DateTime @updatedAt
 }
 

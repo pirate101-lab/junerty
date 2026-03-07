@@ -50,8 +50,8 @@ export default async function ReferralsPage() {
           <CardTitle>Your Referral Link</CardTitle>
           <CardDescription>Share this link — you earn a bonus when each person activates their account</CardDescription>
         </CardHeader>
-        <CardContent className="flex items-center gap-3">
-          <code className="flex-1 rounded bg-muted px-3 py-2 text-sm font-mono truncate">
+        <CardContent className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          <code className="flex-1 rounded bg-muted px-3 py-2 text-sm font-mono break-all">
             {referralLink}
           </code>
           <CopyReferralButton text={referralLink} />

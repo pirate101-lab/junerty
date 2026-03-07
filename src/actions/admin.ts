@@ -35,6 +35,7 @@ export async function updateGlobalSettings(data: {
   activationFeeAmount?: number;
   referralBonusAmount?: number;
   minWithdrawalAmount?: number;
+  whatsappNumber?: string;
   lipanaApiKey?: string;
   lipanaSecretKey?: string;
   lipanaMerchantId?: string;
@@ -57,6 +58,7 @@ export async function updateGlobalSettings(data: {
   if (data.activationFeeAmount !== undefined) updateData.activationFeeAmount = data.activationFeeAmount;
   if (data.referralBonusAmount !== undefined) updateData.referralBonusAmount = data.referralBonusAmount;
   if (data.minWithdrawalAmount !== undefined) updateData.minWithdrawalAmount = data.minWithdrawalAmount;
+  if (data.whatsappNumber !== undefined) updateData.whatsappNumber = data.whatsappNumber || null;
   if (lipanaCredentials) updateData.lipanaCredentials = lipanaCredentials;
 
   if (existing) {

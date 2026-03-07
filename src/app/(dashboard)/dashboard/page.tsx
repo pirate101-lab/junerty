@@ -57,8 +57,8 @@ export default async function DashboardPage() {
         </p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
-        <Card>
+      <div className="grid gap-4 grid-cols-2 lg:grid-cols-5">
+        <Card className="col-span-2 sm:col-span-1">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Tasks</CardTitle>
             <ListTodo className="h-4 w-4 text-muted-foreground" />
@@ -108,7 +108,7 @@ export default async function DashboardPage() {
             </p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-gradient-to-br from-primary/5 to-primary/10">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Wallet</CardTitle>
             <WalletIcon className="h-4 w-4 text-muted-foreground" />

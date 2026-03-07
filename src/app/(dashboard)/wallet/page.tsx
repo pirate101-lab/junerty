@@ -52,7 +52,7 @@ export default async function WalletPage() {
         <p className="text-muted-foreground">Manage your balance and transactions</p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 grid-cols-1 md:grid-cols-3">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Wallet Balance</CardTitle>
@@ -114,8 +114,8 @@ export default async function WalletPage() {
           <CardTitle>Your Referral Link</CardTitle>
           <CardDescription>Share this link to earn referral bonuses when friends activate</CardDescription>
         </CardHeader>
-        <CardContent className="flex items-center gap-3">
-          <code className="flex-1 rounded bg-muted px-3 py-2 text-sm font-mono truncate">
+        <CardContent className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          <code className="flex-1 rounded bg-muted px-3 py-2 text-sm font-mono break-all">
             {referralLink}
           </code>
           <CopyReferralButton text={referralLink} />
@@ -133,7 +133,7 @@ export default async function WalletPage() {
           ) : (
             <div className="space-y-3">
               {transactions.map((tx) => (
-                <div key={tx.id} className="flex items-center justify-between rounded-lg border border-border p-4">
+                <div key={tx.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between rounded-lg border border-border p-4 gap-3">
                   <div>
                     <p className="font-medium">{TX_TYPE_LABELS[tx.type] ?? tx.type}</p>
                     <p className="text-sm text-muted-foreground">{tx.description}</p>

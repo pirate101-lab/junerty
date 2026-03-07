@@ -53,6 +53,7 @@ export default async function AdminPage() {
                 activationFeeAmount: Number(settings?.activationFeeAmount ?? 100),
                 referralBonusAmount: Number(settings?.referralBonusAmount ?? 100),
                 minWithdrawalAmount: Number(settings?.minWithdrawalAmount ?? 500),
+                whatsappNumber: settings?.whatsappNumber ?? "",
               }}
             />
           </CardContent>

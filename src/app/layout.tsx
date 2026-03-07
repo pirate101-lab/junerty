@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Platform | Modern Business Dashboard",
-  description: "A production-ready dashboard platform with task management and analytics",
+  title: "SYNTHGRAPHIX | Digital Business Platform",
+  description: "The future of digital business - analytics, wallet, referrals and task management",
 };
 
 export default function RootLayout({

@@ -30,47 +30,57 @@ const adminNavItem = { href: "/admin", label: "Admin", icon: ShieldCheck };
 
 interface AppSidebarProps {
   isAdmin?: boolean;
+  onClose?: () => void;
 }
 
-export function AppSidebar({ isAdmin = false }: AppSidebarProps) {
+export function AppSidebar({ isAdmin = false, onClose }: AppSidebarProps) {
   const pathname = usePathname();
   const navItems = isAdmin ? [...baseNavItems, adminNavItem] : baseNavItems;
 
   return (
     <aside className="flex h-screen w-64 flex-col border-r border-border bg-card">
       <div className="flex h-16 items-center gap-2 border-b border-border px-6">
-        <Link href="/dashboard" className="font-semibold text-lg">
-          Platform
+        <Link
+          href="/dashboard"
+          className="bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-lg font-bold tracking-wide text-transparent"
+          onClick={onClose}
+        >
+          SYNTHGRAPHIX
         </Link>
       </div>
+
       <nav className="flex-1 space-y-1 p-4">
         {navItems.map((item) => {
-          const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+          const isActive =
+            pathname === item.href ||
+            pathname.startsWith(item.href + "/");
           return (
             <Link
               key={item.href}
               href={item.href}
+              onClick={onClose}
               className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                "relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
                 isActive
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                  ? "border-l-[3px] border-primary bg-accent/60 text-foreground"
+                  : "border-l-[3px] border-transparent text-muted-foreground hover:bg-accent/80 hover:text-accent-foreground"
               )}
             >
-              <item.icon className="h-5 w-5" />
-              {item.label}
+              <item.icon className="h-5 w-5 shrink-0" />
+              <span>{item.label}</span>
             </Link>
           );
         })}
       </nav>
+
       <div className="border-t border-border p-4 space-y-2">
         <ThemeToggle />
         <Button
           variant="ghost"
-          className="w-full justify-start"
+          className="w-full justify-start gap-2 rounded-xl text-muted-foreground transition-all duration-200 hover:bg-accent/80 hover:text-accent-foreground"
           onClick={() => signOut({ callbackUrl: "/" })}
         >
-          <LogOut className="mr-2 h-4 w-4" />
+          <LogOut className="h-4 w-4" />
           Sign out
         </Button>
       </div>
