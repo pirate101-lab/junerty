@@ -36,42 +36,43 @@
   --card-foreground: #1e293b;
   --popover: #ffffff;
   --popover-foreground: #1e293b;
-  --primary: #0891b2;
+  --primary: #7c3aed;
   --primary-foreground: #ffffff;
   --secondary: #e2e8f0;
   --secondary-foreground: #1e293b;
   --muted: #e2e8f0;
   --muted-foreground: #475569;
-  --accent: #cffafe;
-  --accent-foreground: #155e75;
+  --accent: #ede9fe;
+  --accent-foreground: #4c1d95;
   --destructive: #dc2626;
   --destructive-foreground: #ffffff;
   --border: #cbd5e1;
   --input: #cbd5e1;
-  --ring: #0891b2;
+  --ring: #7c3aed;
 }
 
-/* ── SYNTHGRAPHIX Dark Mode ── */
+/* ── SYNTHGRAPHIX Dark Mode (Ynex-inspired navy/violet) ── */
 .dark {
-  --background: #09090b;
-  --foreground: #f1f5f9;
-  --card: #18181b;
-  --card-foreground: #f1f5f9;
-  --popover: #18181b;
-  --popover-foreground: #f1f5f9;
-  --primary: #22d3ee;
-  --primary-foreground: #09090b;
-  --secondary: #1e293b;
-  --secondary-foreground: #f1f5f9;
-  --muted: #1e293b;
+  --background: #0e0e23;
+  --foreground: #e2e8f0;
+  --card: #1a1a3e;
+  --card-foreground: #e2e8f0;
+  --popover: #1a1a3e;
+  --popover-foreground: #e2e8f0;
+  --primary: #8b5cf6;
+  --primary-foreground: #ffffff;
+  --secondary: #2d2b55;
+  --secondary-foreground: #e2e8f0;
+  --muted: #2d2b55;
   --muted-foreground: #94a3b8;
-  --accent: #164e63;
-  --accent-foreground: #ecfeff;
-  --destructive: #b91c1c;
-  --destructive-foreground: #fef2f2;
-  --border: #27272a;
-  --input: #27272a;
-  --ring: #22d3ee;
+  --accent: #312e81;
+  --accent-foreground: #e2e8f0;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #2d2b55;
+  --input: #2d2b55;
+  --ring: #8b5cf6;
+  --sidebar: #0c0c20;
 }
 
 /* ── Base Resets ── */
@@ -106,11 +107,11 @@ html.dark {
 
 /* ── Gradient Utility Classes ── */
 .bg-gradient-brand {
-  background: linear-gradient(135deg, #06b6d4, #3b82f6);
+  background: linear-gradient(135deg, #7c3aed, #3b82f6);
 }
 
 .bg-gradient-brand-dark {
-  background: linear-gradient(135deg, #22d3ee, #818cf8);
+  background: linear-gradient(135deg, #8b5cf6, #818cf8);
 }
 
 .bg-gradient-subtle {
@@ -122,7 +123,128 @@ html.dark {
 }
 
 .bg-gradient-hero {
-  background: linear-gradient(160deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
+  background: linear-gradient(160deg, #7c3aed 0%, #3b82f6 50%, #8b5cf6 100%);
+}
+
+/* ── Brand Gradient Text ── */
+.brand-gradient {
+  background: linear-gradient(135deg, #8b5cf6, #a78bfa, #c4b5fd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Stat icon color helpers ── */
+.stat-icon-purple {
+  background: rgba(139, 92, 246, 0.15);
+  color: #8b5cf6;
+}
+.stat-icon-green {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+}
+.stat-icon-blue {
+  background: rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
+}
+.stat-icon-orange {
+  background: rgba(249, 115, 22, 0.15);
+  color: #f97316;
+}
+.stat-icon-red {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+.stat-icon-teal {
+  background: rgba(20, 184, 166, 0.15);
+  color: #14b8a6;
+}
+
+/* ── Status badge variants ── */
+.badge-todo {
+  background: rgba(148, 163, 184, 0.15);
+  color: #94a3b8;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}
+.badge-inprogress {
+  background: rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+.badge-inreview {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+.badge-done {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+.badge-pending {
+  background: rgba(249, 115, 22, 0.15);
+  color: #f97316;
+  border: 1px solid rgba(249, 115, 22, 0.3);
+}
+.badge-completed {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+.badge-failed {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+.badge-cancelled {
+  background: rgba(148, 163, 184, 0.15);
+  color: #94a3b8;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+/* ── Priority badge variants ── */
+.badge-low {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+.badge-medium {
+  background: rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+.badge-high {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+.badge-urgent {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* ── Dashboard card hover effect ── */
+.dashboard-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.dashboard-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.12);
+}
+
+/* ── Progress bar ── */
+.progress-bar {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--muted);
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+  transition: width 0.3s ease;
 }
 
 /* ── Scrollbar Styles ── */

@@ -38,7 +38,7 @@ export function AppSidebar({ isAdmin = false, onClose }: AppSidebarProps) {
   const navItems = isAdmin ? [...baseNavItems, adminNavItem] : baseNavItems;
 
   return (
-    <aside className="flex h-screen w-64 flex-col border-r border-border bg-card">
+    <aside className="flex h-screen w-64 flex-col border-r border-border bg-card dark:bg-[#0c0c20]">
       <div className="flex h-16 items-center gap-2 border-b border-border px-6">
         <Link
           href="/dashboard"
