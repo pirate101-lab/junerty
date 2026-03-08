@@ -4,12 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
-  Image,
   User,
   Wallet,
   Users,
   ShieldCheck,
-  Mic,
   ClipboardList,
 } from "lucide-react";
 import { BrandLogo } from "@/components/brand-logo";
@@ -18,8 +16,8 @@ import { cn } from "@/lib/utils";
 const mainNavItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/tasks", label: "Tasks", icon: ClipboardList },
-  { href: "/transcription", label: "Transcription", icon: Mic },
   { href: "/wallet", label: "Wallet", icon: Wallet },
+  { href: "/withdraw", label: "Withdraw", icon: Wallet },
   { href: "/referrals", label: "Referrals", icon: Users },
 ];
 

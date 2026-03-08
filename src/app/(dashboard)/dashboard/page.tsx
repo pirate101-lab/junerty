@@ -18,10 +18,9 @@ import {
   TrendingUp,
   WalletIcon,
   ArrowUpRight,
-  Mic,
+  ClipboardList,
   Play,
   Coins,
-  Image,
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -106,7 +105,7 @@ export default async function DashboardPage() {
                 <p className="mt-1 text-xs text-muted-foreground">Tasks completed</p>
               </div>
               <div className="stat-icon-green flex h-10 w-10 items-center justify-center rounded-xl">
-                <Mic className="h-5 w-5" />
+                <ClipboardList className="h-5 w-5" />
               </div>
             </div>
           </CardContent>
@@ -177,13 +176,8 @@ export default async function DashboardPage() {
           </div>
           <div className="flex gap-2">
             <Link href="/tasks">
-              <Button variant="outline" size="sm" className="text-xs h-7 gap-1">
-                <Image className="h-3 w-3" /> Image Tasks
-              </Button>
-            </Link>
-            <Link href="/transcription">
               <Button size="sm" className="text-xs h-7 gap-1">
-                <Mic className="h-3 w-3" /> Start Transcribing
+                <ClipboardList className="h-3 w-3" /> View All Tasks
               </Button>
             </Link>
           </div>
@@ -192,15 +186,15 @@ export default async function DashboardPage() {
         {metrics.assignedVideos.length === 0 ? (
           <Card>
             <CardContent className="flex flex-col items-center gap-3 py-12">
-              <Mic className="h-10 w-10 text-muted-foreground" />
+              <ClipboardList className="h-10 w-10 text-muted-foreground" />
               <p className="text-sm font-medium">All caught up!</p>
               <p className="text-xs text-muted-foreground">You&apos;ve completed all available tasks. Check back later for new ones.</p>
             </CardContent>
           </Card>
         ) : (
-          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
+          <div className="grid gap-4 grid-cols-2">
             {metrics.assignedVideos.map((video) => (
-              <Link key={video.id} href="/transcription">
+              <Link key={video.id} href="/tasks">
                 <Card className="group overflow-hidden transition-all hover:border-primary/40 hover:shadow-md cursor-pointer">
                   <div className="relative aspect-video bg-zinc-900">
                     {video.thumbnailUrl ? (
@@ -230,7 +224,7 @@ export default async function DashboardPage() {
                   </div>
                   <CardContent className="p-3">
                     <p className="text-sm font-medium truncate">{video.title}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">Tap to transcribe · Earn {video.rewardCoins} coins</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">Tap to start · Earn KES {video.rewardCoins}</p>
                   </CardContent>
                 </Card>
               </Link>

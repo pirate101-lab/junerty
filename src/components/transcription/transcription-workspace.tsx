@@ -119,9 +119,8 @@ function VideoPlayer({ streamUrl, title, thumbnailUrl }: VideoPlayerProps) {
           src={streamUrl}
           poster={thumbnailUrl ?? undefined}
           className="h-full w-full object-contain"
-          preload="auto"
+          preload="metadata"
           playsInline
-          crossOrigin="anonymous"
         />
         {!isPlaying && (
           <button onClick={(e) => { e.stopPropagation(); handlePlayPause(); }} aria-label="Play video" className="absolute inset-0 flex items-center justify-center">

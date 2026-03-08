@@ -22,6 +22,7 @@ interface CoverrVideo {
   title: string;
   tags: string[];
   playback_id: string;
+  base_filename: string;
   poster?: string;
   thumbnail?: string;
   duration?: string;
@@ -40,9 +41,9 @@ const COVERR_API_BASE = "https://api.coverr.co/videos";
 const PAGES_TO_FETCH = 5;
 const PER_PAGE = 25;
 
-/** Construct Mux MP4 URL from playback_id */
-function muxMp4Url(playbackId: string): string {
-  return `https://stream.mux.com/${playbackId}/medium.mp4`;
+/** Construct CDN MP4 URL from base_filename (360p for lighter streaming) */
+function cdnMp4Url(baseFilename: string): string {
+  return `https://cdn.coverr.co/videos/${baseFilename}/360p.mp4`;
 }
 
 function randomInt(min: number, max: number): number {
@@ -109,8 +110,8 @@ export async function POST() {
   // Upsert videos into MediaTask table
   let upsertedCount = 0;
   for (const video of allVideos) {
-    if (!video.playback_id) continue;
-    const streamUrl = muxMp4Url(video.playback_id);
+    if (!video.base_filename) continue;
+    const streamUrl = cdnMp4Url(video.base_filename);
 
     try {
       await prisma.mediaTask.upsert({
@@ -129,7 +130,7 @@ export async function POST() {
           thumbnailUrl: video.thumbnail ?? video.poster ?? null,
           title: video.title || "Untitled",
           category: video.tags?.[0] ?? null,
-          rewardCoins: randomInt(5, 15),
+          rewardCoins: randomInt(35, 55),
           isActive: true,
         },
       });

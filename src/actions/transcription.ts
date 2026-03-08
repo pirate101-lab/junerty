@@ -5,6 +5,10 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 
 const DAILY_TASK_LIMIT = 10;
+const IMAGE_REWARD_MIN = 15;
+const IMAGE_REWARD_MAX = 30;
+const VIDEO_REWARD_MIN = 35;
+const VIDEO_REWARD_MAX = 55;
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -324,5 +328,11 @@ export async function getImageTasks() {
     },
   });
 
-  return { tasks, todayCount, dailyLimit: DAILY_TASK_LIMIT, limitReached: false, noTasks: false };
+  // Image tasks pay 15-30 KES (different from video 35-55)
+  const imageTasks = tasks.map((t) => ({
+    ...t,
+    rewardCoins: IMAGE_REWARD_MIN + Math.floor(Math.random() * (IMAGE_REWARD_MAX - IMAGE_REWARD_MIN + 1)),
+  }));
+
+  return { tasks: imageTasks, todayCount, dailyLimit: DAILY_TASK_LIMIT, limitReached: false, noTasks: false };
 }
