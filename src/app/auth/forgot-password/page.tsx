@@ -13,6 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { BrandLogo } from "@/components/brand-logo";
 
 export default function ForgotPasswordPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -55,12 +56,8 @@ export default function ForgotPasswordPage() {
 
         <div className="relative z-10 w-full max-w-md">
           {/* SYNTHGRAPHIX branding */}
-          <div className="mb-8 text-center">
-            <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
-              <span className="bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 bg-clip-text text-transparent">
-                SYNTHGRAPHIX
-              </span>
-            </h1>
+          <div className="mb-8 flex justify-center">
+            <BrandLogo size={72} className="flex-col gap-2" />
           </div>
 
           <Card className="border border-border/50 bg-card/80 shadow-2xl backdrop-blur-xl">
@@ -93,12 +90,8 @@ export default function ForgotPasswordPage() {
 
       <div className="relative z-10 w-full max-w-md">
         {/* SYNTHGRAPHIX branding */}
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
-            <span className="bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 bg-clip-text text-transparent">
-              SYNTHGRAPHIX
-            </span>
-          </h1>
+        <div className="mb-8 flex justify-center">
+          <BrandLogo size={72} className="flex-col gap-2" />
         </div>
 
         <Card className="border border-border/50 bg-card/80 shadow-2xl backdrop-blur-xl">

@@ -12,6 +12,7 @@ import {
   Headphones,
   Zap,
 } from "lucide-react";
+import { BrandLogo } from "@/components/brand-logo";
 
 export default async function LandingPage() {
   const session = await auth();
@@ -22,14 +23,7 @@ export default async function LandingPage() {
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/40 bg-background/80 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-          <Link href="/" className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 shadow-lg shadow-violet-500/30">
-              <Zap className="h-4 w-4 text-white" />
-            </div>
-            <span className="brand-gradient text-lg font-extrabold tracking-wide">
-              SYNTHGRAPHIX
-            </span>
-          </Link>
+          <BrandLogo href="/" size={32} />
           <div className="flex items-center gap-2 sm:gap-3">
             <Link href="/auth/login">
               <Button variant="ghost" size="sm" className="text-sm">
@@ -293,14 +287,7 @@ export default async function LandingPage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="flex flex-col items-center gap-6 sm:flex-row sm:justify-between">
             <div className="flex flex-col items-center gap-2 sm:items-start">
-              <div className="flex items-center gap-2">
-                <div className="flex h-6 w-6 items-center justify-center rounded-md bg-gradient-to-br from-violet-500 to-indigo-600">
-                  <Zap className="h-3.5 w-3.5 text-white" />
-                </div>
-                <span className="brand-gradient text-base font-extrabold tracking-wide">
-                  SYNTHGRAPHIX
-                </span>
-              </div>
+              <BrandLogo size={24} />
               <p className="text-xs text-muted-foreground">
                 © 2025 SYNTHGRAPHIX. All rights reserved.
               </p>

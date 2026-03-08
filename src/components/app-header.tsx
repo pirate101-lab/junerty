@@ -18,6 +18,7 @@ import { getNotifications, markNotificationRead } from "@/actions/notifications"
 import type { Notification } from "@prisma/client";
 import { cn } from "@/lib/utils";
 import { useSidebar } from "@/components/sidebar-context";
+import { BrandLogo } from "@/components/brand-logo";
 import { useTheme } from "@/components/theme-provider";
 
 export function AppHeader() {
@@ -67,9 +68,7 @@ export function AppHeader() {
           >
             <Menu className="h-5 w-5" />
           </Button>
-          <span className="brand-gradient text-base font-extrabold tracking-wide md:hidden">
-            SYNTHGRAPHIX
-          </span>
+          <BrandLogo size={28} className="md:hidden" />
         </div>
 
         {/* Center: desktop search */}

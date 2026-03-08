@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <!-- Black background -->
+  <rect width="500" height="500" fill="#0d0d0d"/>
+
+  <!-- Upper tribal / flame design (red) -->
+  <g fill="#cc0000">
+    <!-- far-left spike -->
+    <path d="M 88 212 C 84 186 90 158 108 140 C 99 162 110 180 104 200 Z"/>
+    <!-- second spike -->
+    <path d="M 112 205 C 108 178 122 150 145 138 C 133 162 142 180 136 198 Z"/>
+    <!-- third spike -->
+    <path d="M 148 197 C 146 170 162 143 185 136 C 172 160 178 178 172 194 Z"/>
+    <!-- left-center connecting body -->
+    <path d="M 88 214 C 108 198 138 196 175 195 L 170 215 C 140 215 108 215 88 214 Z"/>
+
+    <!-- center top-arch bridge -->
+    <path d="M 175 195 C 200 172 230 160 250 157 C 270 160 300 172 325 195
+             C 305 183 280 177 250 177 C 220 177 195 183 175 195 Z"/>
+
+    <!-- right-center connecting body -->
+    <path d="M 325 195 L 320 215 C 355 215 390 215 412 214 C 390 215 360 198 325 195 Z"/>
+    <!-- third-right spike -->
+    <path d="M 315 194 C 322 178 328 160 315 136 C 338 143 354 170 352 197 Z"/>
+    <!-- second-right spike -->
+    <path d="M 355 198 C 360 180 370 162 358 138 C 378 150 392 178 388 205 Z"/>
+    <!-- far-right spike -->
+    <path d="M 388 200 C 393 180 404 162 392 140 C 410 158 416 186 412 212 Z"/>
+
+    <!-- overall top arc stroke -->
+    <path d="M 88 215 Q 250 70 412 215" stroke="#cc0000" stroke-width="3.5" fill="none"/>
+  </g>
+
+  <!-- Lower tribal / flame design (red) -->
+  <g fill="#cc0000">
+    <!-- lower-left spike -->
+    <path d="M 110 292 C 105 310 118 335 140 348 C 128 330 136 315 130 298 Z"/>
+    <!-- second lower-left spike -->
+    <path d="M 140 288 C 135 308 148 332 172 344 C 158 326 164 310 158 295 Z"/>
+    <!-- connecting lower body left -->
+    <path d="M 110 290 L 115 308 C 140 305 165 302 190 300 C 165 298 138 293 110 290 Z"/>
+
+    <!-- center lower arch bridge -->
+    <path d="M 190 300 C 210 318 232 326 252 327 C 272 326 294 318 318 300
+             C 298 311 278 318 252 318 C 226 318 206 311 190 300 Z"/>
+
+    <!-- connecting lower body right -->
+    <path d="M 318 300 L 322 310 C 290 308 268 306 250 305 C 278 305 300 306 318 300 Z"/>
+    <!-- second lower-right spike -->
+    <path d="M 318 295 C 330 310 336 328 324 344 C 344 332 358 310 352 292 Z"/>
+    <!-- lower-right spike -->
+    <path d="M 350 290 C 360 308 365 330 352 345 C 372 332 382 308 375 292 Z"/>
+
+    <!-- overall bottom arc stroke -->
+    <path d="M 110 290 Q 215 390 375 290" stroke="#cc0000" stroke-width="3.5" fill="none"/>
+  </g>
+
+  <!-- SYNTHGRAPHIX text (white, bold, slightly distressed via filter) -->
+  <defs>
+    <filter id="grunge" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2"
+                         xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+  <text x="250" y="258" text-anchor="middle" dominant-baseline="middle"
+        fill="white" font-size="52" font-weight="900"
+        font-family="Arial Black, Impact, sans-serif"
+        letter-spacing="1" filter="url(#grunge)">SYNTHGRAPHIX</text>
+</svg>

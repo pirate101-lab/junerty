@@ -15,7 +15,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Zap } from "lucide-react";
+import { BrandLogo } from "@/components/brand-logo";
 
 function RegisterForm() {
   const router = useRouter();
@@ -74,12 +74,7 @@ function RegisterForm() {
       <div className="relative z-10 w-full max-w-md">
         {/* SYNTHGRAPHIX branding */}
         <div className="mb-8 flex flex-col items-center gap-3">
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500 to-indigo-600 shadow-2xl shadow-violet-500/30">
-            <Zap className="h-7 w-7 text-white" />
-          </div>
-          <h1 className="text-3xl font-extrabold tracking-tight">
-            <span className="brand-gradient">SYNTHGRAPHIX</span>
-          </h1>
+          <BrandLogo size={72} className="flex-col gap-2" />
         </div>
 
         <Card className="border border-border/50 shadow-2xl shadow-violet-500/5">

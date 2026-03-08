@@ -10,9 +10,9 @@ import {
   Wallet,
   Users,
   ShieldCheck,
-  Zap,
   Mic,
 } from "lucide-react";
+import { BrandLogo } from "@/components/brand-logo";
 import { cn } from "@/lib/utils";
 
 const mainNavItems = [
@@ -104,16 +104,7 @@ export function AppSidebar({ isAdmin = false, open = false, onClose }: AppSideba
       >
       {/* Logo */}
       <div className="flex h-16 items-center gap-2.5 border-b border-sidebar-border px-5">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 shadow-lg shadow-violet-500/25">
-          <Zap className="h-4 w-4 text-white" />
-        </div>
-        <Link
-          href="/dashboard"
-          onClick={onClose}
-          className="brand-gradient text-lg font-extrabold tracking-wide"
-        >
-          SYNTHGRAPHIX
-        </Link>
+        <BrandLogo href="/dashboard" onClick={onClose} size={36} />
       </div>
 
       {/* Navigation */}
