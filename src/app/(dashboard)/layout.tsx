@@ -19,7 +19,7 @@ export default async function DashboardLayout({
         <SidebarServerWrapper />
         <div className="flex flex-1 flex-col overflow-hidden">
           <AppHeader />
-          <main className="flex-1 overflow-y-auto p-4 md:p-6">{children}</main>
+          <main className="flex-1 overflow-y-auto p-4 pb-8 md:p-6 md:pb-10">{children}</main>
         </div>
       </div>
       <WhatsAppButton />

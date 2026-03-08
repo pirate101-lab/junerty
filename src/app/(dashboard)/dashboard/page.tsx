@@ -288,6 +288,29 @@ export default async function DashboardPage() {
           )}
         </CardContent>
       </Card>
+
+      {/* Footer */}
+      <footer className="mt-4 border-t border-border pt-6 pb-4">
+        <div className="flex flex-col items-center gap-3 text-center">
+          <p className="text-xs text-muted-foreground">
+            © {new Date().getFullYear()} <span className="font-semibold text-foreground">SYNTHGRAPHIX</span>. All rights reserved.
+          </p>
+          <div className="flex items-center gap-4 text-[11px] text-muted-foreground">
+            <Link href="/tasks" className="hover:text-primary transition-colors">Tasks</Link>
+            <span className="text-border">·</span>
+            <Link href="/wallet" className="hover:text-primary transition-colors">Wallet</Link>
+            <span className="text-border">·</span>
+            <Link href="/withdraw" className="hover:text-primary transition-colors">Withdraw</Link>
+            <span className="text-border">·</span>
+            <Link href="/referrals" className="hover:text-primary transition-colors">Referrals</Link>
+            <span className="text-border">·</span>
+            <Link href="/profile" className="hover:text-primary transition-colors">Profile</Link>
+          </div>
+          <p className="text-[10px] text-muted-foreground/60">
+            Earn real money completing tasks and referring friends.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
