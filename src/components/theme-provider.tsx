@@ -17,9 +17,9 @@ type ThemeProviderState = {
 };
 
 const initialState: ThemeProviderState = {
-  theme: "dark",
+  theme: "light",
   setTheme: () => null,
-  resolvedTheme: "dark",
+  resolvedTheme: "light",
 };
 
 const ThemeProviderContext =
