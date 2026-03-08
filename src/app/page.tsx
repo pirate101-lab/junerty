@@ -116,11 +116,22 @@ export default async function LandingPage() {
                 ))}
               </div>
               <div className="flex items-center gap-1.5">
-                {[1, 2, 3, 4, 5].map((s) => (
+                {[1, 2, 3, 4].map((s) => (
                   <Star key={s} className="h-4 w-4 fill-amber-400 text-amber-400" />
                 ))}
-                <span className="ml-1.5 text-sm text-muted-foreground">
-                  Loved by <strong className="text-foreground">10,000+</strong> earners
+                {/* Half star */}
+                <svg key="half" className="h-4 w-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <defs>
+                    <linearGradient id="halfStar">
+                      <stop offset="50%" stopColor="currentColor" />
+                      <stop offset="50%" stopColor="transparent" />
+                    </linearGradient>
+                  </defs>
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="url(#halfStar)" />
+                </svg>
+                <span className="ml-1 font-semibold text-amber-400 text-sm">4.5</span>
+                <span className="ml-1 text-sm text-muted-foreground">
+                  from <strong className="text-foreground">10,000+</strong> earners
                 </span>
               </div>
             </div>
