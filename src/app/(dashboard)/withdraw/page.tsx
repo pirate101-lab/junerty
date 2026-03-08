@@ -3,8 +3,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { WithdrawForm } from "@/components/wallet/withdraw-form";
-import { Wallet, Clock, CheckCircle, AlertTriangle, ArrowRight, Activity } from "lucide-react";
-import Link from "next/link";
+import { Wallet, Clock } from "lucide-react";
 import { LiveWithdrawFeed } from "@/components/wallet/live-withdraw-feed";
 
 export default async function WithdrawPage() {
@@ -44,7 +43,7 @@ export default async function WithdrawPage() {
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
               <Wallet className="h-5 w-5 text-primary" />
-              <CardTitle className="text-base">Withdraw to M-Pesa</CardTitle>
+              <CardTitle className="text-base">Withdraw Funds</CardTitle>
             </div>
             <CardDescription>
               Balance: <strong>KES {balance.toLocaleString()}</strong>
@@ -52,36 +51,7 @@ export default async function WithdrawPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {!user?.isActive ? (
-              <div className="flex flex-col items-center gap-3 py-6 text-center">
-                <AlertTriangle className="h-10 w-10 text-yellow-500" />
-                <div>
-                  <p className="text-sm font-medium">Account Not Activated</p>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    Activate your account to enable withdrawals
-                  </p>
-                </div>
-                <Link
-                  href="/activate"
-                  className="inline-flex items-center gap-1 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
-                >
-                  Activate Now <ArrowRight className="h-4 w-4" />
-                </Link>
-              </div>
-            ) : balance < minWithdrawal ? (
-              <div className="flex flex-col items-center gap-3 py-6 text-center">
-                <Wallet className="h-10 w-10 text-muted-foreground" />
-                <div>
-                  <p className="text-sm font-medium">Insufficient Balance</p>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    You need at least KES {minWithdrawal.toLocaleString()} to withdraw.
-                    Current balance: KES {balance.toLocaleString()}
-                  </p>
-                </div>
-              </div>
-            ) : (
-              <WithdrawForm balance={balance} minWithdrawal={minWithdrawal} />
-            )}
+            <WithdrawForm balance={balance} minWithdrawal={minWithdrawal} isActive={user?.isActive ?? false} />
           </CardContent>
         </Card>
 
@@ -95,15 +65,19 @@ export default async function WithdrawPage() {
             <CardContent className="space-y-2.5 text-xs text-muted-foreground">
               <div className="flex items-start gap-2">
                 <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-[10px] font-bold text-primary">1</span>
-                Enter your Safaricom M-Pesa number and amount
+                Choose M-Pesa or Airtel Money and enter your phone number
               </div>
               <div className="flex items-start gap-2">
                 <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-[10px] font-bold text-primary">2</span>
-                Your withdrawal goes to <strong className="text-foreground">pending</strong> review
+                Enter the amount you want to withdraw (min KES {minWithdrawal.toLocaleString()})
               </div>
               <div className="flex items-start gap-2">
                 <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-[10px] font-bold text-primary">3</span>
-                Once approved, funds are sent to your M-Pesa instantly
+                Your withdrawal goes to <strong className="text-foreground">pending</strong> review
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-[10px] font-bold text-primary">4</span>
+                Once approved, funds are sent to your mobile money instantly
               </div>
             </CardContent>
           </Card>

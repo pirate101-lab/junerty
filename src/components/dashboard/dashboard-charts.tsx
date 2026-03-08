@@ -118,38 +118,80 @@ export function WeeklyActivityChart({
 }: {
   data: { day: string; tasks: number; completed: number }[];
 }) {
+  const maxVal = Math.max(...data.map((d) => Math.max(d.tasks, d.completed)), 1);
+
   return (
-    <div className="h-[260px]">
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={data} barSize={14} barGap={4}>
-          <defs>
-            <linearGradient id="barTasksGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#a78bfa" stopOpacity={1} />
-              <stop offset="100%" stopColor="#7c3aed" stopOpacity={0.85} />
-            </linearGradient>
-            <linearGradient id="barCompGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#6ee7b7" stopOpacity={1} />
-              <stop offset="100%" stopColor="#10b981" stopOpacity={0.85} />
-            </linearGradient>
-          </defs>
-          <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
-          <XAxis dataKey="day" tick={AXIS_TICK} axisLine={false} tickLine={false} />
-          <YAxis tick={AXIS_TICK} axisLine={false} tickLine={false} allowDecimals={false} />
-          <Tooltip
-            contentStyle={CHART_TOOLTIP_STYLE}
-            cursor={{ fill: "var(--accent)", opacity: 0.3 }}
-          />
-          <Legend
-            iconType="circle"
-            iconSize={8}
-            formatter={(value) => (
-              <span style={{ color: "var(--muted-foreground)", fontSize: 12 }}>{value}</span>
-            )}
-          />
-          <Bar dataKey="tasks" name="Assigned" fill="url(#barTasksGrad)" radius={[6, 6, 0, 0]} />
-          <Bar dataKey="completed" name="Completed" fill="url(#barCompGrad)" radius={[6, 6, 0, 0]} />
-        </BarChart>
-      </ResponsiveContainer>
+    <div className="space-y-5">
+      {/* Summary stats row */}
+      <div className="grid grid-cols-3 gap-3">
+        <div className="rounded-xl bg-primary/10 p-3 text-center">
+          <p className="text-xl font-bold text-primary">{data.reduce((s, d) => s + d.tasks, 0)}</p>
+          <p className="text-[10px] text-muted-foreground font-medium">Assigned</p>
+        </div>
+        <div className="rounded-xl bg-emerald-500/10 p-3 text-center">
+          <p className="text-xl font-bold text-emerald-500">{data.reduce((s, d) => s + d.completed, 0)}</p>
+          <p className="text-[10px] text-muted-foreground font-medium">Completed</p>
+        </div>
+        <div className="rounded-xl bg-amber-500/10 p-3 text-center">
+          <p className="text-xl font-bold text-amber-500">
+            {data.reduce((s, d) => s + d.tasks, 0) > 0
+              ? Math.round((data.reduce((s, d) => s + d.completed, 0) / data.reduce((s, d) => s + d.tasks, 0)) * 100)
+              : 0}%
+          </p>
+          <p className="text-[10px] text-muted-foreground font-medium">Rate</p>
+        </div>
+      </div>
+
+      {/* Day-by-day progress bars */}
+      <div className="space-y-3">
+        {data.map((d) => {
+          const taskPct = (d.tasks / maxVal) * 100;
+          const compPct = (d.completed / maxVal) * 100;
+          return (
+            <div key={d.day} className="flex items-center gap-3">
+              <span className="w-8 text-xs font-medium text-muted-foreground shrink-0">{d.day}</span>
+              <div className="flex-1 space-y-1">
+                <div className="h-2 w-full overflow-hidden rounded-full bg-muted/40">
+                  <div
+                    className="h-full rounded-full"
+                    style={{
+                      width: `${taskPct}%`,
+                      background: "linear-gradient(90deg, #8b5cf6, #a78bfa)",
+                      transition: "width 0.5s ease",
+                    }}
+                  />
+                </div>
+                <div className="h-2 w-full overflow-hidden rounded-full bg-muted/40">
+                  <div
+                    className="h-full rounded-full"
+                    style={{
+                      width: `${compPct}%`,
+                      background: "linear-gradient(90deg, #10b981, #6ee7b7)",
+                      transition: "width 0.5s ease",
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="text-right shrink-0 w-12">
+                <p className="text-[10px] font-medium text-primary">{d.tasks}</p>
+                <p className="text-[10px] font-medium text-emerald-500">{d.completed}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Legend */}
+      <div className="flex items-center justify-center gap-5 text-xs text-muted-foreground">
+        <span className="flex items-center gap-1.5">
+          <span className="h-2 w-5 rounded-full" style={{ background: "linear-gradient(90deg, #8b5cf6, #a78bfa)" }} />
+          Assigned
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span className="h-2 w-5 rounded-full" style={{ background: "linear-gradient(90deg, #10b981, #6ee7b7)" }} />
+          Completed
+        </span>
+      </div>
     </div>
   );
 }
