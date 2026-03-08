@@ -69,6 +69,8 @@ export async function updateGlobalSettings(data: {
   }
 
   revalidatePath("/admin");
+  revalidatePath("/admin/dashboard");
+  revalidatePath("/admin/settings");
   return { success: true };
 }
 

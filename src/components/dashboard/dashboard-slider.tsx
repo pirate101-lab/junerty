@@ -18,16 +18,28 @@ export function DashboardSlider() {
 
   useEffect(() => {
     let cancelled = false;
+    const markSlideLoaded = () => {
+      loadedCount.current++;
+      if (loadedCount.current >= SLIDES.length && !cancelled) {
+        window.setTimeout(() => {
+          if (!cancelled) setReady(true);
+        }, 0);
+      }
+    };
+
     SLIDES.forEach((slide) => {
       const img = new Image();
-      img.src = slide.src;
-      img.onload = img.onerror = () => {
-        loadedCount.current++;
-        if (!cancelled && loadedCount.current >= SLIDES.length) setReady(true);
+      let counted = false;
+      const handleLoad = () => {
+        if (counted) return;
+        counted = true;
+        markSlideLoaded();
       };
-      if (img.complete) loadedCount.current++;
+      img.onload = handleLoad;
+      img.onerror = handleLoad;
+      img.src = slide.src;
+      if (img.complete) handleLoad();
     });
-    if (loadedCount.current >= SLIDES.length) setReady(true);
     return () => { cancelled = true; };
   }, []);
 

@@ -78,6 +78,9 @@ export default async function AdminDashboardPage() {
   const txStats = transcriptionStats;
   const activationRate = m.totalUsers > 0 ? (m.activeUsers / m.totalUsers) * 100 : 0;
   const taskRate = m.totalTasks > 0 ? (m.completedTasks / m.totalTasks) * 100 : 0;
+  const lastRefreshLabel = mediaCacheInfo.lastRefresh
+    ? new Date(mediaCacheInfo.lastRefresh).toLocaleString()
+    : null;
 
   // Build revenue chart data from weekData
   const revenueData = m.weekData.map((w: { day: string; users: number; active: number }) => ({
@@ -266,18 +269,38 @@ export default async function AdminDashboardPage() {
 
         <div className="grid gap-4 grid-cols-2 lg:grid-cols-4 mb-6">
           {[
-            { label: "Total Submissions", value: txStats.total, icon: FileText, color: "violet" },
-            { label: "Pending Review", value: txStats.pending, icon: Hourglass, color: "amber" },
-            { label: "Approved", value: txStats.approved, icon: ThumbsUp, color: "emerald" },
-            { label: "Rejected", value: txStats.rejected, icon: ThumbsDown, color: "red" },
-          ].map(({ label, value, icon: Icon, color }) => (
+            {
+              label: "Total Submissions",
+              value: txStats.total,
+              icon: FileText,
+              iconClass: "bg-violet-500/15 text-violet-400",
+            },
+            {
+              label: "Pending Review",
+              value: txStats.pending,
+              icon: Hourglass,
+              iconClass: "bg-amber-500/15 text-amber-400",
+            },
+            {
+              label: "Approved",
+              value: txStats.approved,
+              icon: ThumbsUp,
+              iconClass: "bg-emerald-500/15 text-emerald-400",
+            },
+            {
+              label: "Rejected",
+              value: txStats.rejected,
+              icon: ThumbsDown,
+              iconClass: "bg-red-500/15 text-red-400",
+            },
+          ].map(({ label, value, icon: Icon, iconClass }) => (
             <div key={label} className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5">
               <div className="flex items-start justify-between">
                 <div>
                   <p className="text-[11px] font-semibold uppercase tracking-wider text-white/30">{label}</p>
                   <p className="mt-2 text-2xl font-bold text-white">{value.toLocaleString()}</p>
                 </div>
-                <div className={`flex h-10 w-10 items-center justify-center rounded-xl bg-${color}-500/15 text-${color}-400`}>
+                <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${iconClass}`}>
                   <Icon className="h-5 w-5" />
                 </div>
               </div>
@@ -360,7 +383,7 @@ export default async function AdminDashboardPage() {
             <p className="text-sm font-semibold text-white/80">Media Cache</p>
             <p className="text-xs text-white/30">
               {mediaCacheInfo.cachedVideos} videos cached
-              {mediaCacheInfo.lastRefresh && ` · Last: ${new Date(mediaCacheInfo.lastRefresh as unknown as string).toLocaleString()}`}
+              {lastRefreshLabel && ` · Last: ${lastRefreshLabel}`}
             </p>
           </div>
         </div>

@@ -2,7 +2,7 @@
 
 import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { BrandLogo } from "@/components/brand-logo";
@@ -42,6 +42,7 @@ function AdminLoginForm() {
     const data = await res.json().catch(() => ({ role: "USER" }));
 
     if (data.role !== "ADMIN") {
+      await signOut({ redirect: false });
       setError("Access denied. Admin privileges required.");
       setLoading(false);
       return;
@@ -135,7 +136,7 @@ function AdminLoginForm() {
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors"
                     tabIndex={-1}
                   >
-                    {showPw ? <EyeOff className="h-4.5 w-4.5" /> : <Eye className="h-4.5 w-4.5" />}
+                    {showPw ? <EyeOff className="h-[18px] w-[18px]" /> : <Eye className="h-[18px] w-[18px]" />}
                   </button>
                 </div>
               </div>
@@ -155,7 +156,7 @@ function AdminLoginForm() {
                   </span>
                 ) : (
                   <span className="flex items-center gap-2">
-                    <ShieldCheck className="h-4.5 w-4.5" />
+                    <ShieldCheck className="h-[18px] w-[18px]" />
                     Access Admin Panel
                   </span>
                 )}

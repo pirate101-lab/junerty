@@ -56,9 +56,12 @@ export function EditTaskDialog({
 
   useEffect(() => {
     if (open) {
-      setStatus(task.status);
-      setPriority(task.priority);
-      setAssignedToId(task.assignedToId ?? "");
+      const timer = window.setTimeout(() => {
+        setStatus(task.status);
+        setPriority(task.priority);
+        setAssignedToId(task.assignedToId ?? "");
+      }, 0);
+      return () => window.clearTimeout(timer);
     }
   }, [open, task.status, task.priority, task.assignedToId]);
 

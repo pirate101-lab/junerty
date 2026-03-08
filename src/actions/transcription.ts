@@ -7,8 +7,6 @@ import { prisma } from "@/lib/prisma";
 const DAILY_TASK_LIMIT = 10;
 const IMAGE_REWARD_MIN = 15;
 const IMAGE_REWARD_MAX = 30;
-const VIDEO_REWARD_MIN = 35;
-const VIDEO_REWARD_MAX = 55;
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -237,6 +235,8 @@ export async function approveSubmission(
   ]);
 
   revalidatePath("/admin");
+  revalidatePath("/admin/dashboard");
+  revalidatePath("/admin/transcriptions");
   return { success: true };
 }
 
@@ -262,6 +262,8 @@ export async function rejectSubmission(
   });
 
   revalidatePath("/admin");
+  revalidatePath("/admin/dashboard");
+  revalidatePath("/admin/transcriptions");
   return { success: true };
 }
 

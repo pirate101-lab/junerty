@@ -132,7 +132,7 @@ function RegisterForm() {
           {/* Referral banner */}
           {refCode && (
             <div className="mb-5 flex items-center gap-3 rounded-xl border border-emerald-500/20 bg-emerald-500/10 px-4 py-3 text-sm">
-              <Gift className="h-4.5 w-4.5 shrink-0 text-emerald-400" />
+              <Gift className="h-[18px] w-[18px] shrink-0 text-emerald-400" />
               <span className="text-emerald-300">
                 🎉 Invited by a friend! You&apos;ll both earn a bonus.
               </span>
@@ -200,7 +200,7 @@ function RegisterForm() {
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground/60 hover:text-foreground transition-colors"
                   tabIndex={-1}
                 >
-                  {showPw ? <EyeOff className="h-4.5 w-4.5" /> : <Eye className="h-4.5 w-4.5" />}
+                  {showPw ? <EyeOff className="h-[18px] w-[18px]" /> : <Eye className="h-[18px] w-[18px]" />}
                 </button>
               </div>
               <p className="text-[11px] text-muted-foreground/50">Must be at least 8 characters</p>
@@ -219,7 +219,7 @@ function RegisterForm() {
               ) : (
                 <span className="flex items-center gap-2">
                   Create Account
-                  <ArrowRight className="h-4.5 w-4.5 transition-transform group-hover:translate-x-0.5" />
+                  <ArrowRight className="h-[18px] w-[18px] transition-transform group-hover:translate-x-0.5" />
                 </span>
               )}
             </Button>

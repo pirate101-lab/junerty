@@ -35,7 +35,10 @@ export function AppHeader() {
   }, []);
 
   useEffect(() => {
-    loadNotifications();
+    const timer = window.setTimeout(() => {
+      void loadNotifications();
+    }, 0);
+    return () => window.clearTimeout(timer);
   }, [loadNotifications]);
 
   useEffect(() => {
