@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -16,15 +16,40 @@ const AUTO_PLAY_MS = 1000;
 export function DashboardSlider() {
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [ready, setReady] = useState(false);
+  const loadedCount = useRef(0);
+
+  // Preload all images before starting the slider
+  useEffect(() => {
+    let cancelled = false;
+    const images = SLIDES.map((slide) => {
+      const img = new Image();
+      img.src = slide.src;
+      img.onload = img.onerror = () => {
+        loadedCount.current++;
+        if (!cancelled && loadedCount.current >= SLIDES.length) {
+          setReady(true);
+        }
+      };
+      // If already cached by browser, onload fires synchronously
+      if (img.complete) {
+        loadedCount.current++;
+      }
+      return img;
+    });
+    if (loadedCount.current >= SLIDES.length) setReady(true);
+    return () => { cancelled = true; };
+  }, []);
 
   const next = useCallback(() => setCurrent((c) => (c + 1) % SLIDES.length), []);
   const prev = useCallback(() => setCurrent((c) => (c - 1 + SLIDES.length) % SLIDES.length), []);
 
+  // Only auto-play after all images are loaded
   useEffect(() => {
-    if (paused) return;
+    if (paused || !ready) return;
     const id = setInterval(next, AUTO_PLAY_MS);
     return () => clearInterval(id);
-  }, [paused, next]);
+  }, [paused, ready, next]);
 
   return (
     <div
@@ -32,18 +57,28 @@ export function DashboardSlider() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      {/* Slides */}
+      {/* Preload hints in DOM */}
+      {SLIDES.map((s) => (
+        <link key={s.src} rel="preload" as="image" href={s.src} />
+      ))}
+
       <div className="relative aspect-[16/7] sm:aspect-[16/6] w-full bg-zinc-900">
         {SLIDES.map((slide, i) => (
           <img
             key={slide.src}
             src={slide.src}
             alt={slide.alt}
+            fetchPriority={i === 0 ? "high" : "low"}
+            decoding={i === 0 ? "sync" : "async"}
             className={cn(
-              "absolute inset-0 h-full w-full object-cover transition-opacity duration-700",
-              i === current ? "opacity-100" : "opacity-0"
+              "absolute inset-0 h-full w-full object-cover",
+              ready ? "transition-opacity duration-700" : "",
+              !ready && i === 0
+                ? "opacity-100"
+                : i === current
+                  ? "opacity-100"
+                  : "opacity-0"
             )}
-            loading={i === 0 ? "eager" : "lazy"}
             draggable={false}
           />
         ))}
