@@ -3,9 +3,11 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { AdminSettingsForm } from "@/components/admin/admin-settings-form";
+import { TranscriptionReviewPanel } from "@/components/admin/transcription-review-panel";
 import { UserAvatar } from "@/components/user-avatar";
-import { ShieldAlert, Users, UserCheck, DollarSign, ArrowDownCircle, TrendingUp, CheckCircle2, Clock } from "lucide-react";
+import { ShieldAlert, Users, UserCheck, DollarSign, ArrowDownCircle, TrendingUp, CheckCircle2, Clock, FileText, Hourglass, ThumbsUp, ThumbsDown } from "lucide-react";
 import { getAdminDashboardMetrics } from "@/actions/admin";
+import { getAdminSubmissions, getTranscriptionStats } from "@/actions/transcription";
 import { AdminBarChart } from "@/components/dashboard/dashboard-charts";
 import { formatDate } from "@/lib/utils";
 
@@ -64,9 +66,11 @@ export default async function AdminPage() {
     );
   }
 
-  const [settings, adminMetrics] = await Promise.all([
+  const [settings, adminMetrics, transcriptionStats, recentSubmissions] = await Promise.all([
     prisma.globalSettings.findFirst(),
     getAdminDashboardMetrics(),
+    getTranscriptionStats().catch(() => ({ total: 0, pending: 0, approved: 0, rejected: 0 })),
+    getAdminSubmissions().catch(() => []),
   ]);
 
   const metrics = adminMetrics ?? {
@@ -80,6 +84,8 @@ export default async function AdminPage() {
     totalTasks: 0,
     completedTasks: 0,
   };
+
+  const txStats = transcriptionStats;
 
   const activationRate = metrics.totalUsers > 0
     ? ((metrics.activeUsers / metrics.totalUsers) * 100).toFixed(1)
@@ -336,6 +342,91 @@ export default async function AdminPage() {
           )}
         </CardContent>
       </Card>
+
+      {/* ── Transcription Section ────────────────────────────────── */}
+      <div>
+        <h2 className="text-lg font-semibold tracking-tight mb-1">Transcription Overview</h2>
+        <p className="text-sm text-muted-foreground mb-4">
+          Crowdsourced transcription submissions and payout approvals
+        </p>
+
+        {/* Transcription stats row */}
+        <div className="grid gap-4 grid-cols-2 lg:grid-cols-4 mb-6">
+          <Card className="dashboard-card">
+            <CardContent className="p-5">
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Total Submissions</p>
+                  <p className="mt-2 text-3xl font-bold">{txStats.total.toLocaleString()}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">All time</p>
+                </div>
+                <div className="stat-icon-purple flex h-10 w-10 items-center justify-center rounded-xl">
+                  <FileText className="h-5 w-5" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="dashboard-card">
+            <CardContent className="p-5">
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Pending Review</p>
+                  <p className="mt-2 text-3xl font-bold">{txStats.pending.toLocaleString()}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">Awaiting admin action</p>
+                </div>
+                <div className="stat-icon-orange flex h-10 w-10 items-center justify-center rounded-xl">
+                  <Hourglass className="h-5 w-5" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="dashboard-card">
+            <CardContent className="p-5">
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Approved</p>
+                  <p className="mt-2 text-3xl font-bold">{txStats.approved.toLocaleString()}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">Payouts released</p>
+                </div>
+                <div className="stat-icon-green flex h-10 w-10 items-center justify-center rounded-xl">
+                  <ThumbsUp className="h-5 w-5" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="dashboard-card">
+            <CardContent className="p-5">
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Rejected</p>
+                  <p className="mt-2 text-3xl font-bold">{txStats.rejected.toLocaleString()}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">No payout issued</p>
+                </div>
+                <div className="stat-icon-red flex h-10 w-10 items-center justify-center rounded-xl">
+                  <ThumbsDown className="h-5 w-5" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Submission review queue */}
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-base">Submission Review Queue</CardTitle>
+            <CardDescription>
+              Review user transcriptions and approve or reject them. Approving automatically
+              releases the coin reward to the user&apos;s wallet.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <TranscriptionReviewPanel submissions={recentSubmissions} />
+          </CardContent>
+        </Card>
+      </div>
 
       {/* Settings Form */}
       <div className="max-w-2xl">
