@@ -11,12 +11,14 @@ import {
   Users,
   ShieldCheck,
   Zap,
+  Mic,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const mainNavItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/tasks", label: "Tasks", icon: CheckSquare },
+  { href: "/transcription", label: "Transcription", icon: Mic },
   { href: "/wallet", label: "Wallet", icon: Wallet },
   { href: "/referrals", label: "Referrals", icon: Users },
 ];
