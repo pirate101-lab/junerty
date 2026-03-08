@@ -32,6 +32,7 @@ model User {
   referredBy    User?     @relation("Referrals", fields: [referredById], references: [id])
   referrals     User[]    @relation("Referrals")
   transactions  Transaction[]
+  transcriptions TranscriptionSubmission[]
 }
 
 model Account {
@@ -124,6 +125,7 @@ model GlobalSettings {
   minWithdrawalAmount  Decimal  @default(500) @db.Decimal(10, 2)
   lipanaCredentials    String?
   whatsappNumber       String?
+  mediaCacheLastRefresh DateTime?
   updatedAt            DateTime @updatedAt
 }
 
@@ -147,6 +149,48 @@ enum TransactionType {
   REFERRAL_BONUS
   WITHDRAWAL
   DEPOSIT
+  TRANSCRIPTION_REWARD
+}
+
+// ─── Transcription / Media Task Models ──────────────────────────────────────
+
+model MediaTask {
+  id            String   @id @default(cuid())
+  coverrAssetId String   @unique
+  mediaType     String   @default("video")
+  streamUrl     String
+  thumbnailUrl  String?
+  title         String
+  category      String?
+  rewardCoins   Int      @default(10)
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  submissions TranscriptionSubmission[]
+}
+
+model TranscriptionSubmission {
+  id            String           @id @default(cuid())
+  taskId        String
+  userId        String
+  submittedText String
+  status        SubmissionStatus @default(PENDING_REVIEW)
+  rewardCoins   Int              @default(0)
+  reviewedAt    DateTime?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  task MediaTask @relation(fields: [taskId], references: [id])
+  user User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([taskId, userId])
+}
+
+enum SubmissionStatus {
+  PENDING_REVIEW
+  APPROVED
+  REJECTED
 }
 
 enum TransactionStatus {

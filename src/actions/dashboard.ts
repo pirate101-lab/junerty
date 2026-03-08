@@ -19,7 +19,7 @@ export async function getDashboardMetrics() {
     recentTasks,
     userCount,
     overdueTasks,
-    teamMembers,
+    referrals,
     tasksLast7Days,
   ] = await Promise.all([
     prisma.task.count({
@@ -60,15 +60,15 @@ export async function getDashboardMetrics() {
       },
     }),
     prisma.user.findMany({
+      where: { referredById: userId },
       take: 5,
       orderBy: { createdAt: "desc" },
       select: {
         id: true,
         name: true,
         email: true,
-        role: true,
         isActive: true,
-        _count: { select: { tasksAssigned: true } },
+        createdAt: true,
       },
     }),
     prisma.task.findMany({
@@ -110,7 +110,7 @@ export async function getDashboardMetrics() {
     recentTasks,
     userCount,
     overdueTasks,
-    teamMembers,
+    referrals,
     weekData: weekData.map(({ day, tasks, completed }) => ({ day, tasks, completed })),
   };
 }

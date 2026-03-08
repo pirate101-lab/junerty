@@ -4,10 +4,11 @@ import { prisma } from "@/lib/prisma";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { AdminSettingsForm } from "@/components/admin/admin-settings-form";
 import { TranscriptionReviewPanel } from "@/components/admin/transcription-review-panel";
+import { MediaCacheRefresh } from "@/components/admin/media-cache-refresh";
 import { UserAvatar } from "@/components/user-avatar";
 import { ShieldAlert, Users, UserCheck, DollarSign, ArrowDownCircle, TrendingUp, CheckCircle2, Clock, FileText, Hourglass, ThumbsUp, ThumbsDown } from "lucide-react";
 import { getAdminDashboardMetrics } from "@/actions/admin";
-import { getAdminSubmissions, getTranscriptionStats } from "@/actions/transcription";
+import { getAdminSubmissions, getTranscriptionStats, getMediaCacheInfo } from "@/actions/transcription";
 import { AdminBarChart } from "@/components/dashboard/dashboard-charts";
 import { formatDate } from "@/lib/utils";
 
@@ -66,11 +67,12 @@ export default async function AdminPage() {
     );
   }
 
-  const [settings, adminMetrics, transcriptionStats, recentSubmissions] = await Promise.all([
+  const [settings, adminMetrics, transcriptionStats, recentSubmissions, mediaCacheInfo] = await Promise.all([
     prisma.globalSettings.findFirst(),
     getAdminDashboardMetrics(),
     getTranscriptionStats().catch(() => ({ total: 0, pending: 0, approved: 0, rejected: 0 })),
     getAdminSubmissions().catch(() => []),
+    getMediaCacheInfo().catch(() => ({ cachedVideos: 0, lastRefresh: null })),
   ]);
 
   const metrics = adminMetrics ?? {
@@ -350,6 +352,11 @@ export default async function AdminPage() {
           Crowdsourced transcription submissions and payout approvals
         </p>
 
+        <MediaCacheRefresh
+          cachedVideos={mediaCacheInfo.cachedVideos}
+          lastRefresh={mediaCacheInfo.lastRefresh?.toISOString?.() ?? mediaCacheInfo.lastRefresh as string | null}
+        />
+
         {/* Transcription stats row */}
         <div className="grid gap-4 grid-cols-2 lg:grid-cols-4 mb-6">
           <Card className="dashboard-card">
@@ -423,7 +430,11 @@ export default async function AdminPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <TranscriptionReviewPanel submissions={recentSubmissions} />
+            <TranscriptionReviewPanel submissions={recentSubmissions.map((s) => ({
+              ...s,
+              createdAt: s.createdAt.toISOString(),
+              reviewedAt: s.reviewedAt?.toISOString() ?? null,
+            }))} />
           </CardContent>
         </Card>
       </div>

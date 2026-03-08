@@ -215,14 +215,18 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
 
-        {/* Team Count */}
+        {/* Referrals Count */}
         <Card className="dashboard-card">
           <CardContent className="p-5">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Team</p>
-                <p className="mt-2 text-3xl font-bold">{metrics.userCount}</p>
-                <p className="mt-1 text-xs text-muted-foreground">Total users</p>
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Referrals</p>
+                <p className="mt-2 text-3xl font-bold">{metrics.referrals.length}</p>
+                <Link href="/referrals">
+                  <p className="mt-1 text-xs text-primary hover:underline cursor-pointer flex items-center gap-1">
+                    View all <ArrowUpRight className="h-3 w-3" />
+                  </p>
+                </Link>
               </div>
               <div className="stat-icon-teal flex h-10 w-10 items-center justify-center rounded-xl">
                 <Users className="h-5 w-5" />
@@ -282,32 +286,31 @@ export default async function DashboardPage() {
 
       {/* Team + Recent Tasks Row */}
       <div className="grid gap-6 lg:grid-cols-2">
-        {/* Team Members */}
+        {/* My Referrals */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <div>
-              <CardTitle className="text-base">Team Members</CardTitle>
-              <CardDescription>Recently joined users</CardDescription>
+              <CardTitle className="text-base">My Referrals</CardTitle>
+              <CardDescription>People you&apos;ve invited</CardDescription>
             </div>
-            <span className="text-xs text-muted-foreground">{metrics.userCount} total</span>
+            <Link href="/referrals">
+              <Button variant="outline" size="sm" className="text-xs h-7 px-2.5">View All</Button>
+            </Link>
           </CardHeader>
           <CardContent className="space-y-3">
-            {metrics.teamMembers.length === 0 ? (
-              <p className="text-sm text-muted-foreground py-4 text-center">No team members yet</p>
+            {metrics.referrals.length === 0 ? (
+              <p className="text-sm text-muted-foreground py-4 text-center">No referrals yet. Share your link to invite others!</p>
             ) : (
-              metrics.teamMembers.map((member) => (
-                <div key={member.id} className="flex items-center gap-3 rounded-lg p-2 hover:bg-muted/50 transition-colors">
-                  <UserAvatar name={member.name} email={member.email} />
+              metrics.referrals.map((referral) => (
+                <div key={referral.id} className="flex items-center gap-3 rounded-lg p-2 hover:bg-muted/50 transition-colors">
+                  <UserAvatar name={referral.name} email={referral.email} />
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium truncate">{member.name ?? member.email}</p>
-                    <p className="text-xs text-muted-foreground truncate">{member.email}</p>
+                    <p className="text-sm font-medium truncate">{referral.name ?? referral.email}</p>
+                    <p className="text-xs text-muted-foreground truncate">{referral.email}</p>
                   </div>
-                  <div className="flex items-center gap-2 shrink-0">
-                    <span className={`text-xs px-2 py-0.5 rounded-full ${member.isActive ? "badge-done" : "badge-todo"}`}>
-                      {member.isActive ? "Active" : "Inactive"}
-                    </span>
-                    <span className="text-xs text-muted-foreground">{member._count.tasksAssigned} tasks</span>
-                  </div>
+                  <span className={`text-xs px-2 py-0.5 rounded-full shrink-0 ${referral.isActive ? "badge-done" : "badge-todo"}`}>
+                    {referral.isActive ? "Active" : "Pending"}
+                  </span>
                 </div>
               ))
             )}
