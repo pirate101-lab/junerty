@@ -11,6 +11,8 @@ export async function getDashboardMetrics() {
   const userId = session.user.id;
   const now = new Date();
   const sevenDaysAgo = new Date(Date.now() - 7 * MS_PER_DAY);
+  const todayStart = new Date();
+  todayStart.setUTCHours(0, 0, 0, 0);
 
   const [
     totalTasks,
@@ -21,6 +23,8 @@ export async function getDashboardMetrics() {
     overdueTasks,
     referrals,
     tasksLast7Days,
+    todaySubmissions,
+    userSubmissionTaskIds,
   ] = await Promise.all([
     prisma.task.count({
       where: {
@@ -78,7 +82,49 @@ export async function getDashboardMetrics() {
       },
       select: { createdAt: true, status: true },
     }),
+    // Count today's transcription submissions
+    prisma.transcriptionSubmission.count({
+      where: { userId, createdAt: { gte: todayStart } },
+    }),
+    // IDs of tasks user already submitted
+    prisma.transcriptionSubmission.findMany({
+      where: { userId },
+      select: { taskId: true },
+    }),
   ]);
+
+  // Get 10 random video tasks not yet done by this user
+  const excludeIds = userSubmissionTaskIds.map((s) => s.taskId);
+  const availableCount = await prisma.mediaTask.count({
+    where: { isActive: true, id: { notIn: excludeIds } },
+  });
+
+  let assignedVideos: {
+    id: string;
+    title: string;
+    thumbnailUrl: string | null;
+    streamUrl: string;
+    category: string | null;
+    rewardCoins: number;
+  }[] = [];
+
+  if (availableCount > 0) {
+    const take = Math.min(10, availableCount);
+    const skip = Math.max(0, Math.floor(Math.random() * Math.max(1, availableCount - take)));
+    assignedVideos = await prisma.mediaTask.findMany({
+      where: { isActive: true, id: { notIn: excludeIds } },
+      skip,
+      take,
+      select: {
+        id: true,
+        title: true,
+        thumbnailUrl: true,
+        streamUrl: true,
+        category: true,
+        rewardCoins: true,
+      },
+    });
+  }
 
   const statusMap = Object.fromEntries(
     tasksByStatus.map((s) => [s.status, s._count])
@@ -112,5 +158,8 @@ export async function getDashboardMetrics() {
     overdueTasks,
     referrals,
     weekData: weekData.map(({ day, tasks, completed }) => ({ day, tasks, completed })),
+    assignedVideos,
+    todaySubmissions,
+    dailyLimit: 10,
   };
 }

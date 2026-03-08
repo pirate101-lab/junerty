@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
-import { Search, Bell, Menu, User, Sun, Moon, Settings } from "lucide-react";
+import { Search, Bell, Menu, User, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -171,10 +171,10 @@ export function AppHeader() {
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
-                className="ml-1 flex h-9 items-center gap-2 rounded-full px-2 hover:bg-accent/50"
+                className="ml-1 flex h-9 items-center gap-2 rounded-lg px-2 hover:bg-accent/50"
               >
-                <Avatar className="h-7 w-7 border border-primary/30">
-                  <AvatarFallback className="bg-gradient-to-br from-violet-500 to-indigo-600 text-[11px] font-bold text-white">
+                <Avatar className="h-8 w-8 shrink-0 border border-primary/30">
+                  <AvatarFallback className="bg-gradient-to-br from-violet-500 to-indigo-600 text-xs font-bold text-white">
                     {userInitials}
                   </AvatarFallback>
                 </Avatar>
@@ -205,12 +205,6 @@ export function AppHeader() {
                 <Link href="/profile" className="cursor-pointer">
                   <User className="mr-2 h-4 w-4" />
                   Profile
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/settings" className="cursor-pointer">
-                  <Settings className="mr-2 h-4 w-4" />
-                  Settings
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />

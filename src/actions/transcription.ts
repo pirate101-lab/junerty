@@ -277,3 +277,52 @@ export async function getMediaCacheInfo() {
     lastRefresh: settings?.mediaCacheLastRefresh ?? null,
   };
 }
+
+/**
+ * Get image tasks for the /tasks page (thumbnails from cached media).
+ * Shares the same daily limit and submission logic as transcription.
+ */
+export async function getImageTasks() {
+  const userId = await requireAuth();
+  const start = todayStart();
+
+  const todayCount = await prisma.transcriptionSubmission.count({
+    where: { userId, createdAt: { gte: start } },
+  });
+
+  if (todayCount >= DAILY_TASK_LIMIT) {
+    return { tasks: [], todayCount, dailyLimit: DAILY_TASK_LIMIT, limitReached: true, noTasks: false };
+  }
+
+  const completedTaskIds = await prisma.transcriptionSubmission.findMany({
+    where: { userId },
+    select: { taskId: true },
+  });
+  const excludeIds = completedTaskIds.map((s) => s.taskId);
+
+  const totalAvailable = await prisma.mediaTask.count({
+    where: { isActive: true, id: { notIn: excludeIds } },
+  });
+
+  if (totalAvailable === 0) {
+    return { tasks: [], todayCount, dailyLimit: DAILY_TASK_LIMIT, limitReached: false, noTasks: true };
+  }
+
+  const take = Math.min(10, totalAvailable);
+  const skip = Math.max(0, Math.floor(Math.random() * Math.max(1, totalAvailable - take)));
+
+  const tasks = await prisma.mediaTask.findMany({
+    where: { isActive: true, id: { notIn: excludeIds } },
+    skip,
+    take,
+    select: {
+      id: true,
+      title: true,
+      thumbnailUrl: true,
+      category: true,
+      rewardCoins: true,
+    },
+  });
+
+  return { tasks, todayCount, dailyLimit: DAILY_TASK_LIMIT, limitReached: false, noTasks: false };
+}

@@ -81,8 +81,11 @@ function VideoPlayer({ streamUrl, title, thumbnailUrl }: VideoPlayerProps) {
   const handlePlayPause = useCallback(() => {
     const video = videoRef.current;
     if (!video) return;
-    if (video.paused) video.play();
-    else video.pause();
+    if (video.paused) {
+      video.play().catch((err) => console.error("Play failed:", err));
+    } else {
+      video.pause();
+    }
   }, []);
 
   const handleRewind = useCallback(() => {
@@ -116,11 +119,12 @@ function VideoPlayer({ streamUrl, title, thumbnailUrl }: VideoPlayerProps) {
           src={streamUrl}
           poster={thumbnailUrl ?? undefined}
           className="h-full w-full object-contain"
-          preload="metadata"
+          preload="auto"
           playsInline
+          crossOrigin="anonymous"
         />
         {!isPlaying && (
-          <button onClick={handlePlayPause} aria-label="Play video" className="absolute inset-0 flex items-center justify-center">
+          <button onClick={(e) => { e.stopPropagation(); handlePlayPause(); }} aria-label="Play video" className="absolute inset-0 flex items-center justify-center">
             <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm transition hover:bg-white/30">
               <Play className="h-7 w-7 translate-x-0.5 text-white" />
             </div>
